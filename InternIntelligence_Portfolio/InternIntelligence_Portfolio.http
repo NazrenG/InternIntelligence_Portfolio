@@ -1,0 +1,6 @@
+@InternIntelligence_Portfolio_HostAddress = http://localhost:5109
+
+GET {{InternIntelligence_Portfolio_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
