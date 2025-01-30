@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Portfolio.Business.Abstract;
 using Portfolio.Business.Concrete;
 using Portfolio.Entities.Models;
@@ -10,6 +11,7 @@ namespace InternIntelligence_Portfolio.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableRateLimiting("fixed")]
     public class ContactController : ControllerBase
     {
         private readonly IContactService _contactService;

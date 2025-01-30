@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Portfolio.Business.Abstract;
 using Portfolio.Entities.Models;
 
@@ -9,6 +10,7 @@ namespace InternIntelligence_Portfolio.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableRateLimiting("fixed")]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService projectService;
@@ -90,7 +92,7 @@ namespace InternIntelligence_Portfolio.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("UpdatedProject/{id}")]
-        public async Task<IActionResult> UpdatedProject(int id,[FromBody] Project dto)
+        public async Task<IActionResult> UpdatedProject(int id,[FromBody] ProjectDto dto)
 
         {
             var project = await projectService.GetProjectById(id);

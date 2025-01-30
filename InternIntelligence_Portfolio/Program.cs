@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Portfolio.Business.Abstract;
@@ -9,6 +10,7 @@ using Portfolio.DataAccess.Concrete;
 using Portfolio.Entities.Data;
 using Portfolio.Entities.Models;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,8 +79,22 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnCh
     .AddJsonFile("SMTP.json", optional: false, reloadOnChange: true);
 builder.Services.AddTransient<MailService>();
 
-var app = builder.Build();
 
+//Rate limited 
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("fixed", opt =>
+    {
+        opt.Window = TimeSpan.FromMinutes(1); // limit for a minute
+        opt.PermitLimit = 5; // max 5 request
+        opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 2;
+    });
+});
+
+
+var app = builder.Build();
+app.UseRateLimiter();
 using (var scope = app.Services.CreateScope())
 {
     var serviceProvider = scope.ServiceProvider;

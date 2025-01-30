@@ -1,7 +1,7 @@
 ﻿using InternIntelligence_Portfolio.Dtos;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Portfolio.Business.Abstract;
 using Portfolio.Entities.Models;
 
@@ -9,6 +9,7 @@ namespace InternIntelligence_Portfolio.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableRateLimiting("fixed")]
     public class AchievementController : ControllerBase
     {
         private readonly IAchievementService achievementService;
