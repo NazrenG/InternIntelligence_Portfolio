@@ -2,7 +2,7 @@
   "SmtpSettings": {
     "Host": "smtp.gmail.com",
     "Port": 587,
-    "Username": "boss2023.az@gmail.com",
-    "Password": "dqww trii jstg cbqs"
+    "Username": "example@gmail.com",
+    "Password": "your_password"
   }
 }
